@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ThePureVessel1 | Animator’s Paradise</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+  /* === Global Base === */
+body {
+      margin: 0;
+      font-family: 'Press Start 2P', cursive;
+      background: linear-gradient(135deg, #2ab7ca 0%, #6495ED 50%, #b3e6ff 100%);
+      color: #f0f0f0;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      background-attachment: fixed;
+      background-size: 300% 300%;
+      animation: gradientFlow 30s ease infinite;
+    }
+
+    /* Moving gradient animation */
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Subtle blur overlay */
+    .background-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* === Slimline Slideshow Banner === */
+    .slim-banner-container {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .slim-banner-container img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      filter: brightness(0.9);
+    }
+
+    .slim-banner-container img.active {
+      opacity: 1;
+    }
+
+    /* Text overlay over the slideshow */
+    .slim-banner-text {
+      position: absolute;
+      bottom: 8px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 6px 0;
+      backdrop-filter: blur(6px);
+      letter-spacing: 0.5px;
+      z-index: 11;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    }
+    /* === Hero Banner === */
+    .hero-banner {
+      text-align: center;
+      padding: 60px 20px 80px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+      z-index: 5;
+      position: relative;
+    }
+
+    .hero-banner.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-banner h1 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      color: #fff;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .hero-banner p {
+      font-size: 12px;
+      color: #f0f0f0;
+      max-width: 600px;
+      margin: 0 auto;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+    }
+
+    /* === Decorative Divider === */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, #2ab7ca, #6495ED);
+      margin: 20px auto;
+      border-radius: 3px;
+    }
+/* === Navigation === */
+.top-nav {
+  display: flex;
+  justify-content: center;
+  background: rgba(75,108,183,0.6);
+  backdrop-filter: blur(8px);
+  padding: 10px;
+  position: sticky;
+  top: 35px;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.top-nav a {
+  margin: 0 10px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 10px;
+  transition: 0.3s;
+}
+.top-nav a:hover { color: #dbe8ff; }
+
+/* === Sections === */
+.section {
+  padding: 60px 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  position: relative;
+  z-index: 1;
+}
+
+/* === Section Header & Avatar === */
+.section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.section-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  margin-bottom: 10px;
+  object-fit: cover;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: all 1s ease;
+}
+
+.section-avatar.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: floaty 12s ease-in-out infinite alternate, blink 17s infinite steps(1);
+}
+
+@keyframes floaty {
+  from { transform: translateY(0) scale(1); }
+  to { transform: translateY(-6px) scale(1.02); }
+}
+@keyframes blink {
+  0%, 90%, 100% { filter: brightness(1); }
+  91%, 92% { filter: brightness(0.5); }
+  93%, 94% { filter: brightness(1.4); }
+}
+
+/* === Dialogue Bubble === */
+.dialogue-bubble {
+  position: absolute;
+  top: -10px;
+  left: 110%;
+  width: 160px;
+  background: rgba(100,149,237,0.8);
+  backdrop-filter: blur(6px);
+  border: 2px solid #fff;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 9px;
+  padding: 8px;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.8s ease;
+  pointer-events: none;
+  white-space: pre-line;
+}
+
+.dialogue-bubble.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tail */
+.dialogue-bubble::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 15px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent rgba(100,149,237,0.8) transparent transparent;
+}
+
+/* Blinking cursor for typewriter */
+.dialogue-bubble.typing::after {
+  content: "▋";
+  position: static;
+  animation: blinkCursor 1s steps(2, start) infinite;
+}
+@keyframes blinkCursor { to { opacity: 0; } }
+
+/* === Tabs for Supplies === */
+.tab-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.tab-buttons button {
+  background: rgba(75,108,183,0.6);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 10px;
+  transition: 0.3s;
+}
+.tab-buttons button.active {
+  background: rgba(100,149,237,0.8);
+}
+
+.tab-content { display: none; }
+.tab-content.active {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* === Product Cards === */
+.product-card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  width: 220px;
+  margin: 10px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+.product-card:hover { transform: scale(1.03); }
+.product-card img {
+  width: 100%;
+  border-radius: 5px;
+}
+.product-card a {
+  color: #dbe8ff;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+/* === Music Vault === */
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
+.music-card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  padding: 15px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+/* === Buttons === */
+.cta-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #6495ED, #4b6cb7);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 10px;
+  margin-top: 15px;
+  transition: 0.3s;
+}
+.cta-btn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #4b6cb7, #6495ED);
+}
+
+/* === Footer === */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: rgba(75,108,183,0.7);
+  backdrop-filter: blur(6px);
+  font-size: 10px;
+  color: #fff;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+</style>
+</head>
+<body>
+  <!-- Gaussian blur overlay -->
+  <div class="background-overlay"></div>
+
+  <!-- === Unified Intro Section === -->
+  <div class="slim-banner-container">
+    <img src="sockopme.gif" alt="banner 1" class="active">
+    <img src="animate7.png" alt="banner 2">
+    <img src="sockopme.gif" alt="banner 3">
+
+    <div class="slim-banner-text">
+      🌟 Commissions Open | New Indie Beats Out Now | Support Creativity 💫
+    </div>
+  </div>
+<!-- === Hero Banner === -->
+<div class="hero-banner">
+  <h1>Animator’s Paradise 🎨</h1>
+  <p>Commissions, equip your creative arsenal, and soundtrack your world.</p>
+</div>
+
+<!-- === Navigation === -->
+<nav class="top-nav">
+  <a href="#commissions">Commissions</a>
+  <a href="#supplies">Supplies</a>
+  <a href="#music">Indie Music</a>
+  <a href="#social">Connect</a>
+</nav>
+
+<!-- === Commissions Section === -->
+<section id="commissions" class="section"> 
+  <div class="section-header">
+    <img src="bug.png" alt="Commission Avatar" class="section-avatar">
+    <div class="dialogue-bubble">“Need a story brought to life? I can animate your dream.”</div>
+    <h2>🎬 Commission an Animation</h2>
+  </div>
+  <p>Bring your world to life through bespoke animation and storyboarding.</p>
+  <a href="https://letterbird.co/puresupport" class="cta-btn">Contact Pure</a>
+</section>
+
+<!-- === Supply Hub === -->
+<section id="supplies" class="section">
+  <div class="section-header">
+    <img src="hunter.png" alt="Supplies Avatar" class="section-avatar">
+    <div class="dialogue-bubble">“Grab your gear, creator. Let’s make some magic.”</div>
+    <h2>🛠️ Creative Supply Hub</h2>
+  </div>
+  <p>Choose your realm — all links support the artist through affiliate partnerships.</p>
+
+  <div class="tab-buttons">
+    <button class="active" data-tab="artists">For Artists</button>
+    <button data-tab="youtubers">For YouTubers</button>
+    <button data-tab="gamers">For Gamers</button>
+  </div>
+
+  <div id="artists" class="tab-content active">
+    <div class="product-card">
+      <img src="https://m.media-amazon.com/images/I/61V3w3gR5HL._AC_SL1500_.jpg" alt="Drawing Tablet">
+      <p>XP-Pen Deco 01 V2 Tablet</p>
+      <a href="https://amzn.to/your-link1" target="_blank">Buy on Amazon</a>
+    </div>
+    <div class="product-card">
+      <img src="https://m.media-amazon.com/images/I/71pZ9qQ2MYL._AC_SL1500_.jpg" alt="Sketchbook">
+      <p>Strathmore 400 Sketchbook</p>
+      <a href="https://amzn.to/your-link2" target="_blank">Buy on Amazon</a>
+    </div>
+  </div>
+
+  <div id="youtubers" class="tab-content">
+    <div class="product-card">
+      <img src="https://m.media-amazon.com/images/I/71x60zUJg-L._AC_SL1500_.jpg" alt="Mic">
+      <p>Blue Yeti USB Microphone</p>
+      <a href="https://amzn.to/your-link3" target="_blank">Buy on Amazon</a>
+    </div>
+    <div class="product-card">
+      <img src="https://m.media-amazon.com/images/I/61B04f0VznL._AC_SL1500_.jpg" alt="Lighting Kit">
+      <p>Neewer Ring Light Kit</p>
+      <a href="https://amzn.to/your-link4" target="_blank">Buy on Amazon</a>
+    </div>
+  </div>
+
+  <div id="gamers" class="tab-content">
+    <div class="product-card">
+      <img src="https://m.media-amazon.com/images/I/71lVwl3O4ML._AC_SL1500_.jpg" alt="Gaming Mouse">
+      <p>Logitech G502 Hero</p>
+      <a href="https://amzn.to/your-link5" target="_blank">Buy on Amazon</a>
+    </div>
+    <div class="product-card">
+      <img src="https://m.media-amazon.com/images/I/81o9u9S1wQL._AC_SL1500_.jpg" alt="Headset">
+      <p>Razer BlackShark V2</p>
+      <a href="https://amzn.to/your-link6" target="_blank">Buy on Amazon</a>
+    </div>
+  </div>
+</section>
+
+<!-- === Indie Music Vault === -->
+<section id="music" class="section">
+  <div class="section-header">
+    <img src="avatar_music.png" alt="Music Avatar" class="section-avatar">
+    <div class="dialogue-bubble">“Need beats for your next stream? I’ve got you.”</div>
+    <h2>🎧 Indie Instrumental Vault</h2>
+  </div>
+  <p>Royalty-free instrumentals for gamers, animators, and storytellers.</p>
+
+  <div class="music-grid">
+    <div class="music-card">
+      <p>“Digital Horizon” — Synthwave</p>
+      <audio controls src="instrumental1.mp3"></audio>
+      <a href="instrumental1.mp3" download class="cta-btn">Download MP3</a>
+    </div>
+    <div class="music-card">
+      <p>“Sky Circuit” — Chill Beat</p>
+      <audio controls src="instrumental2.mp3"></audio>
+      <a href="instrumental2.mp3" download class="cta-btn">Download MP3</a>
+    </div>
+  </div>
+</section>
+
+<!-- === Social === -->
+<section id="social" class="section">
+  <div class="section-header">
+    <img src="avatar_social.png" alt="Social Avatar" class="section-avatar">
+    <div class="dialogue-bubble">“Join the creative guild — we’re stronger together.”</div>
+    <h2>🌐 Connect</h2>
+  </div>
+  <p>Follow the journey and join the creative community.</p>
+  <a href="https://github.com/thepurevessel1" target="_blank" class="cta-btn">GitHub</a>
+  <a href="https://instagram.com/thepurevessel1" target="_blank" class="cta-btn">Instagram</a>
+</section>
+
+<footer>&copy; 2025 The Pure Vessel | Animator’s Paradise</footer>
+
+<script>
+  /* === Tabs Script === */
+  const tabButtons = document.querySelectorAll(".tab-buttons button");
+  const tabs = document.querySelectorAll(".tab-content");
+  tabButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      tabButtons.forEach(b => b.classList.remove("active"));
+      tabs.forEach(tab => tab.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
+    });
+  });
+
+  /* === Avatar + Dialogue Animation on Scroll === */
+  const avatars = document.querySelectorAll('.section-avatar');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const avatar = entry.target;
+      const bubble = avatar.nextElementSibling;
+      if (entry.isIntersecting) {
+        avatar.classList.add('visible');
+        setTimeout(() => bubble.classList.add('visible'), 800);
+        setTimeout(() => bubble.classList.remove('visible'), 7000);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  avatars.forEach(avatar => observer.observe(avatar));
+</script>
+ <script>
+    /* === Slideshow Logic === */
+    const slides = document.querySelectorAll('.slim-banner-container img');
+    let currentSlide = 0;
+
+    function nextSlide() {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+    setInterval(nextSlide, 5000);
+
+    /* === Hero fade-in after load === */
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelector('.hero-banner').classList.add('visible');
+      }, 1500);
+    });
+  </script>
+
+</body>
+</html>
